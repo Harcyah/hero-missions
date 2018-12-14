@@ -1,4 +1,4 @@
-## Interface: 80000
 ## Title: MissionsButton
+## Interface: 80100
 ## Notes: Adds left/right/middle click handling on the missions button
 MissionsButton.lua
