@@ -1,4 +1,4 @@
-# wow-missions-button
+# hero-missions
 
 Improve minimap missions button
 
