@@ -1,6 +1,6 @@
 # hero-missions
 
-Improve minimap missions button
+A world of warcraft addon, improving minimap missions button :
 
 - left click: open bfa's missions
 - right click: open legion's missions
