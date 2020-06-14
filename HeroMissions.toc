@@ -1,4 +1,5 @@
 ## Title: HeroMissions
 ## Interface: 80300
+## Author: harcyah@gmail.com
 ## Notes: Adds left/right/middle click handling on the missions button
 HeroMissions.lua
