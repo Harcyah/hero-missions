@@ -1,40 +1,45 @@
-GarrisonLandingPageMinimapButton:HookScript('OnClick', function(self, button, down)
-	if button == 'LeftButton' then
-		if IsShiftKeyDown() then
-			ShowGarrisonLandingPage(Enum.GarrisonType.Type_8_0);
-			return
-		end
-		if IsControlKeyDown()then
-			ShowGarrisonLandingPage(Enum.GarrisonType.Type_7_0);
-			return
-		end
-		if IsAltKeyDown()then
-			ShowGarrisonLandingPage(Enum.GarrisonType.Type_6_0);
-			return
-		end
+
+local function NoopToolTip()
+	-- Disable button tooltip, as it cannot be rendered on < 60 characters
+end
+
+GarrisonLandingPageMinimapButton:SetScript('OnClick', function(self, button, down)
+	HideUIPanel(GarrisonLandingPage);
+
+	if (button == 'LeftButton' and (UnitLevel('player') >= 60)) then
 		ShowGarrisonLandingPage(Enum.GarrisonType.Type_9_0);
+		return
 	end
+
+	if (button == 'MiddleButton' and (UnitLevel('player') >= 50)) then
+		ShowGarrisonLandingPage(Enum.GarrisonType.Type_8_0);
+		return
+	end
+
+	if (button == 'RightButton' and (UnitLevel('player') >= 50) and not IsShiftKeyDown()) then
+		ShowGarrisonLandingPage(Enum.GarrisonType.Type_7_0);
+		return
+	end
+
+	if (button == 'RightButton' and (UnitLevel('player') >= 50) and IsShiftKeyDown()) then
+		ShowGarrisonLandingPage(Enum.GarrisonType.Type_6_0);
+		return
+	end
+
 end);
 
-GarrisonLandingPageMinimapButton:RegisterForClicks('LeftButtonUp');
+GarrisonLandingPageMinimapButton:RegisterForClicks('LeftButtonUp', 'MiddleButtonUp', 'RightButtonUp');
 
-SLASH_HERO_MISSIONS_6_01 = '/heromissions60'
-SLASH_HERO_MISSIONS_7_01 = '/heromissions70'
-SLASH_HERO_MISSIONS_8_01 = '/heromissions80'
-SLASH_HERO_MISSIONS_9_01 = '/heromissions90'
+GarrisonLandingPageMinimapButton:SetScript('OnEnter', NoopToolTip);
+GarrisonLandingPageMinimapButton:SetScript('OnLeave', NoopToolTip);
 
-SlashCmdList['HERO_MISSIONS_6_0'] = function()
-	ShowGarrisonLandingPage(Enum.GarrisonType.Type_6_0);
-end
+local frame = CreateFrame('Frame');
+frame:RegisterEvent('PLAYER_STARTED_MOVING');
+frame:SetScript('OnEvent', function(self, event, ...)
 
-SlashCmdList['HERO_MISSIONS_7_0'] = function()
-	ShowGarrisonLandingPage(Enum.GarrisonType.Type_7_0);
-end
+	if (event == 'PLAYER_STARTED_MOVING') then
+		GarrisonLandingPageMinimapButton:Show();
+		frame:UnregisterEvent('PLAYER_STARTED_MOVING');
+	end
 
-SlashCmdList['HERO_MISSIONS_8_0'] = function()
-	ShowGarrisonLandingPage(Enum.GarrisonType.Type_8_0);
-end
-
-SlashCmdList['HERO_MISSIONS_9_0'] = function()
-	ShowGarrisonLandingPage(Enum.GarrisonType.Type_9_0);
-end
+end)
