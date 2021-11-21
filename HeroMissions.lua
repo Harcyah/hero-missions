@@ -35,11 +35,21 @@ GarrisonLandingPageMinimapButton:SetScript('OnLeave', NoopToolTip);
 
 local frame = CreateFrame('Frame');
 frame:RegisterEvent('PLAYER_STARTED_MOVING');
+frame:RegisterEvent('ZONE_CHANGED_NEW_AREA');
+frame:RegisterEvent('PLAYER_ENTERING_WORLD');
 frame:SetScript('OnEvent', function(self, event, ...)
 
 	if (event == 'PLAYER_STARTED_MOVING') then
 		GarrisonLandingPageMinimapButton:Show();
 		frame:UnregisterEvent('PLAYER_STARTED_MOVING');
+	end
+
+	if (event == 'ZONE_CHANGED_NEW_AREA') then
+		GarrisonLandingPageMinimapButton:Show();
+	end
+
+	if (event == 'PLAYER_ENTERING_WORLD') then
+		GarrisonLandingPageMinimapButton:Show();
 	end
 
 end)
